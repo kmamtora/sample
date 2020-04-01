@@ -1,0 +1,18 @@
+{
+    "step1": "#!/usr/bin/env bdwb",
+    "step2": "builder organization --name Bluedata",
+    "step3": "catalog load --filepath {jsonfile}",
+    "step4": "appconfig package --dir {appconfig}",
+    "step5": "logo file --filepath {logo}",
+    "step6": {
+        "image": "image build --basedir {dockerPath} --image-repotag {repotag}",
+        "pull": "image pull --image-repotag {repotag}"
+    },
+    "step7": {
+        "single": "image package --image-repotag {repotag} --os {ostype} --roles {roles}",
+        "multiple": "image package --image-repotag {repotag} --os {ostype} --roles {roles}"
+    },
+    "step8": "catalog save --filepath staging/{jsonfile} --force",
+    "step9": "sources package --additional {appconfig}",
+    "step10": "catalog package"
+}

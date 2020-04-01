@@ -1,0 +1,28 @@
+:host >>> .popover {
+    background-color: #01a9829f;
+    border-radius: 0.0rem;
+    border: none;
+    text-align: left;
+    width: auto;
+    height: auto;
+    z-index: 1010; /* A value higher than 1010 that solves the problem */
+}
+
+:host >>> .popover>.arrow:after {
+    border-top-color: #01a9829f;
+    top: -1px;
+}
+
+:host >>> .popover>.arrow:before {
+    top: -1px;
+}
+
+:host >>> .popover-body {
+    color:#fff !important;
+    background: #01a9829f !important;
+}
+
+.mat-form-field {
+    width: 1000px;
+    height: 600px;
+}

@@ -1,0 +1,49 @@
+<div class="container-fluid">
+        <div class="row mx-1 mx-sm-5 mt-3">
+            <div class="col-12 col-sm-12">
+            <div class="container">
+                <h4 class="font-weight-light d-flex align-items-center" style="margin-left: 20px;font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> APPWORKBENCH DEPLOYMENT TOOL  </h4> 
+                <!-- <span  style="font-size: 18px;"> &nbsp; > Design your image </span> -->
+            </div>
+            </div>
+        </div>
+        <div class="row mx-1 mx-sm-4">
+            <div class="col-12 col-sm-12">
+                   <div class="container mt-3">
+                        <div class="row" style="margin-left: 25px; margin-right: 25px;">
+                             <mat-card class="container" style="height: 600px">
+                                <div class="row" style="margin-left: 15px; margin-right: 15px;">
+                                    <div class="col-12 col-sm-12">
+                                        <label  class="col-form-label font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Image Building SDK</label>
+                                        <button type="button" mat-raised-button class="font-weight-light float-sm-right float-left rounded-2" [routerLink]="['/custom']"
+                                            style="background-color: #01a982; color: #ffffff; right: 0px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" >Design your app</button>                             
+                                    </div>
+                                    <div class="col-12 col-sm-12 mt-3" >
+                                        <table class="table mat-elevation-z2" *ngIf="mStatusDataSource !== undefined">
+                                            <tbody>
+                                                <tr class="bg-secondary text-white font-weight-light" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                                <td scope="col">Name</td>
+                                                <td scope="col">Status</td>
+                                                </tr>
+                                                <!-- <tr *ngFor="let item of mStatusDataSource">  -->
+                                                <tr class="font-weight-light" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> 
+                                                    <td style="width: 50%;">
+                                                    {{mStatusDataSource.name}}
+                                                    </td>
+                                                    <td style="width: 50%;" *ngIf="mStatusDataSource.status === 'Completed'">
+                                                        {{mStatusDataSource.status}} <img src="../../assets/images/completed-icon.png" alt="completed" /> &nbsp;&nbsp;&nbsp; Download <a href='{{mStatusDataSource.binary}}'> <img src="../../assets/images/download-icon.png" alt="completed" />  </a> 
+                                                    </td>
+                                                    <td style="width: 50%;" *ngIf="mStatusDataSource.status === 'building'">
+                                                        {{mStatusDataSource.status}} <img src="../../assets/images/creating-icon.png" alt="building" />  
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>

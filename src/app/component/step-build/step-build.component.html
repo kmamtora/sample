@@ -1,0 +1,37 @@
+<div class="container" style="padding:left: 0px: padding-right: 0px;">
+    <div class="row">
+      <h5 class="col font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Step 5: Build</h5>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <button type="button" mat-raised-button
+          class="rounded-2 mt-3" (click)="openDialogEditor()"
+          ngbPopover="Read-only view of the SDK JSON." triggers="mouseenter:mouseleave"
+          style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">View JSON</button>
+
+        <button type="button" mat-raised-button
+          class="rounded-2 mt-3 ml-3" (click)="fnDownloadJson()"
+          ngbPopover="Download the SDK JSON." triggers="mouseenter:mouseleave"
+          style="background-color: #01a982; color: #ffffff; width: 150px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Download JSON</button>
+
+          <button type="button" mat-raised-button
+          class="rounded-2 mt-3 ml-3" (click)="fnBuild()"
+          ngbPopover="Start building the application." triggers="mouseenter:mouseleave"
+          style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Build</button>
+      </div>
+    </div>
+    <div class="row mt-3">
+        <span class="col" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+            {{lbl_status}}
+        </span>
+      </div>
+    <div class="row mt-3">
+        <span class="col" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+            The final results will be captured under "Your Workspace/deliverables" directory.
+        </span>
+    </div>
+   <mat-form-field appearance="fill">
+    <textarea matInput [(ngModel)]="consoleOutput" readonly rows="30" ></textarea>
+  </mat-form-field>
+
+</div>

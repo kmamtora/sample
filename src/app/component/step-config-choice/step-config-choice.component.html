@@ -1,0 +1,738 @@
+<div class="container">
+  <div class="row">
+    <h5 class="col font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Step 3: Config Choices</h5>
+  </div>
+  
+  <div class="row mt-3" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;"> 
+      <div class="col-12 col-sm-12">
+          <h5 class="font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Default Configuration</h5>
+      </div>
+      <div class="col-12 col-sm-12">
+          <div class="form-group row">
+              <label class="col-12 col-sm-2 col-form-label mt-sm-2 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif; padding-right: 0;">Selected Roles</label>
+              <div class="col-12 col-sm-9">
+                  <mat-form-field style="width: 280px;">
+                      <!-- selected_role_default_config_selected -->
+                    <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Default roles for creating a cluster." triggers="mouseenter:mouseleave" placement="right" name="selected_role" [(ngModel)]="selected_role_default_config_value" multiple>
+                        <mat-option (onSelectionChange)="onChangeSelectedRoleDefaultConfig($event)" *ngFor="let role of selected_role_default_config" [value]="role">{{role}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+              </div>
+          </div>
+      </div>
+      <!-- <form #thirdDefaultConfigFormGroup="ngForm" novalidate> -->
+          <div class="col-12 col-sm-12">
+              <div class="form-group row">
+                  <label class="col-12 col-sm-2 col-form-label mt-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif; padding-left: 0; padding-right: 0;">
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-end" style="padding-right: 20px;">
+                      Role to Service
+                      </div>
+                      <div class="col-12 d-flex justify-content-end" style="padding-right: 20px;">
+                      Mapping *
+                      </div>
+                    </div> 
+                    <i> <img src="../../../assets/images/tool-tip.png" alt="info" ngbPopover="Default services running on the default roles selected above." triggers="mouseenter:mouseleave" placement="right" />  </i>
+                  </label>
+                  <div class="col-12 col-sm-8">
+                    <div style="border:1px solid #8e98a1; padding-top: 15px; padding-left: 15px; padding-right: 15px; margin: 0px; border-radius: 4px;">
+                  
+                      <div class="form-group row" style="margin-bottom: 0;">
+                         <div class="order-0">
+                          <label class="col-form-label mr-3 mr-sm-3 ml-3" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Role </label>
+                          <mat-form-field style="margin-top: -10px; width: 220px;">
+                            <mat-select name="role" [(ngModel)]="defaultConfig.role" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                              <mat-option (onSelectionChange)="onChangeRoleServiceMapDefaultConfig($event)" *ngFor="let role of selected_role_default_config_value" [value]="role">{{role}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                         <div class="order-1">
+                          <label class="col-form-label mr-3 mr-sm-3 ml-3" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Service </label>
+                          <mat-form-field style="margin-top: -10px; width: 220px;">
+                            <mat-select name="service" [(ngModel)]="defaultConfig.service" multiple style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                              <mat-option *ngFor="let service of service_default_config" [value]="service">{{service}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="order-2 ml-2">
+                          <img *ngIf="!defaultSettingUpdateFlag" style="cursor: pointer;" class="mb-3 mt-sm-3 " src="../../assets/images/add-row-icon.png" alt="add"  (click)="onMapRoleServiceDefaultConfig()" />
+                          <img *ngIf="defaultSettingUpdateFlag" style="cursor: pointer;" class="mb-3 mt-sm-3" src="../../assets/images/update-icon.png" alt="update"  (click)="onMapRoleServiceDefaultConfig()" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+      <!-- </form> -->
+
+      
+    
+      <div class="col-12 col-sm-10" style="padding-left: 15pxpx !important; padding-right: 15px !important;" *ngIf="mapRoleService_default_config != null && mapRoleService_default_config.length > 0">
+        <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+          <tbody>
+            <tr style="background-color: #01a982; color: #ffffff;">
+              <td style="width: 40%" scope="col">Role</td>
+              <td style="width: 40%" scope="col">Service</td>
+              <td style="width: 10%" scope="col">Edit</td>
+              <td style="width: 10%" scope="col">Delete</td>
+            </tr>
+            <tr *ngFor="let item of mapRoleService_default_config; let i = index">
+                <td class="align-middle">{{item.role_id}}</td>
+                <td> 
+                  <span *ngFor="let itemService of item.service_ids; let isLast=last">
+                    {{itemService}}{{isLast ? '' : ', '}}
+                  </span>
+                </td>
+                <td class="align-middle"> 
+                    <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditDefaultConfig(item)" />  &nbsp; 
+                </td>
+                <td class="align-middle"> 
+                  <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteDefaultConfig(item)" /> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+
+      <div class="row mt-3" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;"> 
+          <div class="col-12 col-sm-12">
+            <h5 class="font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Config Meta</h5>
+          </div>
+          <form class="col-12 col-sm-12" [formGroup]="thirdConfigMetaFormGroup" (ngSubmit)="onAddConfigMeta()" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                <input type="hidden" value="0" class="form-control" formControlName="id" />
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label d-flex justify-content-end"> Name </label>
+                  <div class="col-sm-4">
+                    <input type="text" ngbPopover="Static Configuration key." triggers="mouseenter:mouseleave" placement="right" class="form-control" (keypress)="configMetaRestrictOnly($event)" formControlName="name" />
+                    <div *ngIf="_thirdConfigMeta_name.invalid && _thirdConfigMeta_name.touched">
+                  <small
+                    *ngIf="_thirdConfigMeta_name.errors?.pattern"
+                    class="text-danger">Please enter valid name</small>
+                </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+              <div class="form-group row">
+                <label class="col-sm-1 col-form-label d-flex justify-content-end"> Value </label>
+                <div class="col-sm-4">
+                  <input type="text" ngbPopover="Static Configuration value." triggers="mouseenter:mouseleave" placement="right" class="form-control" formControlName="value"  />
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 offset-md-1 offset-1" style="padding-left: 0px !important;">
+              <div class="form-group row">
+                <button
+                  type="submit"
+                  [disabled]="editmodeConfigMeta"
+                  mat-raised-button
+                  class="ml-3 rounded-2"
+                  style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Add </button>
+                  <button
+                 [disabled]="!editmodeConfigMeta"
+                 type="button"
+                 mat-raised-button
+                 class="ml-3 rounded-2"
+                 style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" (click)="onUpdateConfigMeta()">Update </button>
+                 <button
+                 type="button"
+                 mat-raised-button
+                 class="ml-3 rounded-2"
+                 style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" (click)="onResetConfigMeta()"> Reset </button>
+              </div>
+            </div>
+          </form>
+          <div class="col-12 col-sm-10" *ngIf="mConfigMeta != null && mConfigMeta.length > 0" > 
+            <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+              <tbody>
+                <tr style="background-color: #01a982; color: #ffffff;">
+                  <td style="width: 40%" scope="col">Name</td>
+                  <td style="width: 40%" scope="col">Value</td>
+                  <td style="width: 10%" scope="col">Edit</td>
+                  <td style="width: 10%" scope="col">Delete</td>
+                </tr>
+                <tr *ngFor="let item of mConfigMeta"> 
+                  <td >{{item.name}}</td>
+                  <td >{{item.value}}</td>
+                  <td > 
+                       <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditConfigMetaData(item)" />  &nbsp; 
+                  </td>
+                  <td > 
+                    <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteConfigMetaData(item)" /> 
+               </td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+          
+        </div>
+        
+
+        <div class="row mt-3" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;"> 
+          <div class="col-12 col-sm-12">
+              <h5 class="font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Advanced Configuration [optional]</h5>
+          </div>
+          <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+            <div class="form-group row ml-2">
+                <label class="col-sm-3 col-form-label mt-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Additional Config Choice Type &nbsp;
+                  <i> <img src="../../../assets/images/tool-tip.png" alt="info" ngbPopover="Select all the types of additional configuration to be enabled." triggers="mouseenter:mouseleave" placement="right" />  </i></label>
+                <div class="col-sm-4">
+                    <div class="form-group row" style="margin-top: 5px;">
+                      <mat-form-field style="width: 350px;">
+                        <!-- <mat-select  [formControl]="additionalConfig" name="additionalConfig_selected" [(ngModel)]="additionalConfig_selected" multiple> -->
+                          <mat-select  name="additionalConfig_selected1" [(ngModel)]="additionalConfig_selected" multiple style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                          <mat-option (onSelectionChange)="onChangeAdditionalConfig($event)" *ngFor="let item of advanceConfigList" [value]="item">{{item}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                </div>
+            </div>
+          </div>
+           
+          <!-- Boolean Start-->
+          <div *ngIf="displayBoolean" class="col-12 col-sm-12">
+            <div class="row">
+                <h5 class="col-12 font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                  Boolean
+                  <!-- <span style="border-bottom: 1px solid #01a982; width: 96%; display: block;"></span> -->
+                </h5>
+            </div>
+            <input type="hidden" [(ngModel)]="booleanId" />
+          <div class="row mt-2" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;">
+            <form class="col-12 col-sm-12" [formGroup]="thirdBooleanFormGroup1" (ngSubmit)="onSaveThirdGroupBoolean()" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+              <div class="col-12 col-sm-12" style="padding-left: 0px !important; margin-left: -15px;">
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label d-flex justify-content-end" style="margin-left: 15px;">Name *</label>
+                  <div class="col-sm-4">
+                    <input ngbPopover="User visible name for the configuration choice." triggers="mouseenter:mouseleave" placement="right" type="text" formControlName="name" class="form-control" />
+                  </div>
+                  <div class="col-sm-5">
+                    <!-- <button class="float-right" type="submit" mat-button color="primary" style="color: black;" [disableRipple]="true"> Add Boolean &nbsp; <img src="../../assets/images/add-icon.png" alt="add" /> </button> -->
+                  </div>
+                </div>
+              </div>
+            </form>
+              
+              <div class="col-12 col-sm-12">
+                <mat-tab-group>
+                  <mat-tab>
+                    <ng-template mat-tab-label style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> True
+                    </ng-template>
+                    <div style="overflow-x: hidden !important;">
+                      <div class="row">
+                        <div class="col-12 col-sm-12 mt-4">
+                          <div class="form-group row" style="margin-left: -30px;">
+                              <label class="col-sm-2 col-form-label mt-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Additional Roles</label>
+                              <div class="col-sm-4">
+                                  <mat-form-field style="width: 280px;">
+                                      <!-- selected_role_default_config_selected -->
+                                    <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Additional roles to be enabled." triggers="mouseenter:mouseleave" placement="right" name="selected_role_boolean" [(ngModel)]="selected_role_additional_config_value_boolean" multiple>
+                                        <mat-option (onSelectionChange)="onChangeSelectedRoleAdditionalConfigBoolean($event)" *ngFor="let role of selected_role_default_config" [value]="role">{{role}}</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-form-label d-flex justify-content-end" style="width: 159px !important; max-width: 200px !important; padding-right: 15px;font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif; padding-left: 0;"> 
+                            <!-- <div class="float-right"> Additional Role </div> <br> to Service Mapping *  -->
+                            <div class="row">
+                              <div class="col-12 d-flex justify-content-end" >
+                                Additional Role to
+                              </div>
+                              <div class="col-12 d-flex justify-content-end">
+                                Service Mapping * 
+                              </div>
+                            </div>
+                            &nbsp;
+                            <i> <img src="../../../assets/images/tool-tip.png" alt="info" ngbPopover="Additional services for roles selected." triggers="mouseenter:mouseleave" placement="right" />  </i>
+                            </label>
+                            <div class="col-12 col-sm-8" style="border:1px solid #8e98a1; padding-top: 15px; margin: 0px; border-radius: 4px;">
+                              <div class="form-group row" style="margin-bottom: 0; padding-left: 0px;">
+                                <div class="order-0">
+                                  <label class="col-form-label mr-3 mr-sm-3 ml-2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Role </label>
+                                  <mat-form-field style="margin-top: -10px; width: 200px;">
+                                      <mat-select name="role" [(ngModel)]="additionalConfigBoolean.role" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                        <mat-option (onSelectionChange)="onChangeRoleServiceMapAdditionalConfigBoolean($event)" *ngFor="let role of selected_role_additional_config_value_boolean" [value]="role">{{role}}</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="order-1">
+                                  <label class="col-form-label mr-3 mr-sm-3 ml-2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Service </label>
+                                  <mat-form-field style="margin-top: -10px; width: 200px;">
+                                    <mat-select name="service" [(ngModel)]="additionalConfigBoolean.service" multiple style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                      <mat-option *ngFor="let service of service_default_config" [value]="service">{{service}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                </div>
+                                <div class="order-2 ml-4">
+                                  <img *ngIf="!additionalConfigBooleanUpdateFlag" style="cursor: pointer;" class="mb-3 mt-sm-3" src="../../assets/images/add-row-icon.png" alt="add" (click)="onMapRoleServiceAdditionalConfigBoolean()" />
+                                  <img *ngIf="additionalConfigBooleanUpdateFlag" style="cursor: pointer;" class="mb-3 mt-sm-3" src="../../assets/images/update-icon.png" alt="update" (click)="onMapRoleServiceAdditionalConfigBoolean()" />
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="offset-sm-2 col-12 col-sm-8" style="margin-top: 10px; padding-left: 0px !important; padding-right: 0px !important;" *ngIf="mapRoleService_additional_config_boolean != null && mapRoleService_additional_config_boolean.length > 0">
+                      <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                        <tbody>
+                          <tr style="background-color: #01a982; color: #ffffff;">
+                            <td style="width: 40%" scope="col">Role</td>
+                            <td style="width: 40%" scope="col">Service</td>
+                            <td style="width: 10%" scope="col">Edit</td>
+                            <td style="width: 10%" scope="col">Delete</td>
+                          </tr>
+                          <tr *ngFor="let item of mapRoleService_additional_config_boolean; let i = index">
+                              <td class="align-middle">{{item.role_id}}</td>
+                              <td> 
+                                  <span *ngFor="let itemService of item.service_ids; let isLast=last">
+                                    {{itemService}}{{isLast ? '' : ', '}}
+                                  </span>
+                                </td>
+                              <td class="align-middle"> 
+                                  <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigBoolean(item)" />  &nbsp; 
+                              </td>
+                              <td class="align-middle"> 
+                                <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigBoolean(item)" /> 
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                      </div>
+                    </div>
+                  </mat-tab>
+
+                </mat-tab-group>
+              </div>
+            
+            <div class="col-sm-10" align="right" style="padding-right: 0 !important;">
+              <!-- <button class="float-right" type="submit" mat-button color="primary" style="color: black;" (click)="onSaveThirdGroupMulti1_new()" [disableRipple]="true"> Add Multivalue &nbsp; <img src="../../assets/images/add-icon.png" alt="add" /> </button> -->
+                <button
+                [disabled]="flag_update_boolean"
+                type="button"
+                (click)="onSaveThirdGroupBoolean()" 
+                mat-raised-button
+                class="rounded-2"
+                style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Add </button>
+
+                <button
+                [disabled]="!flag_update_boolean"
+                type="button"
+                (click)="onSaveThirdGroupBoolean()" 
+                mat-raised-button
+                class="rounded-2 ml-3"
+                style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Update </button>
+            </div>
+            <div class="col-12 col-sm-10" style="margin-top: 10px; padding-right: 0px !important;" *ngIf="additionalConfigBooleanArr != null && additionalConfigBooleanArr.length > 0">
+                <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                  <tbody>
+                    <tr style="background-color: #01a982; color: #ffffff;">
+                      <td style="width: 26.5%" scope="col">Name</td>
+                      <!-- <td style="width: 26.5%" scope="col">Option</td> -->
+                      <td style="width: 26.5%" scope="col">Addition Role</td>
+                      <td style="width: 26.5%" scope="col">Role [Service]</td>
+                      <td style="width: 10%" scope="col">Edit</td>
+                      <td style="width: 10%" scope="col">Delete</td>
+                    </tr>
+                    <tr *ngFor="let item of additionalConfigBooleanArr; let i = index">
+                        <td class="align-middle">{{item.name}}</td>
+                        <!-- <td class="align-middle">{{item.option}}</td> -->
+                        <td class="align-middle"> 
+                            <span *ngFor="let item1 of item.selected_role; let isLast=last">
+                              {{item1}}{{isLast ? '' : ', '}}
+                            </span>
+                        </td>
+                        <td>
+                          <!-- <span *ngFor="let item2 of item.map; let isLast=last">
+                            {{item2.role_id}}{{isLast ? '' : ', '}}
+                          </span> -->
+                          <div *ngFor="let item2 of item.map; let isLast=last">
+                              <span>{{item2.role_id}} [{{item2.service_ids}}]</span>
+                          </div>
+                        </td>
+                        <td class="align-middle"> 
+                            <!-- <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigBoolean(item)" />  &nbsp;  -->
+                             <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigBooleanArr(item)"/> 
+                        </td>
+                        <td class="align-middle"> 
+                          <!-- <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigBoolean(item)" />  &nbsp;  -->
+                           <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigBooleanArr(item)"/> 
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+        <!-- Boolean End-->
+
+        <!-- Multivalue Start-->
+        <div *ngIf="displayMultivalue" class="col-12 col-sm-12" style="margin-top: 20px;">
+          <div class="row">
+              <h5 class="col-12 font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                Multivalue
+                <!-- <span style="border-bottom: 1px solid #01a982; width: 96%; display: block;"></span> -->
+              </h5>
+              <input type="hidden" [(ngModel)]="multivalueId" name="multivalueId" />
+
+          </div>
+          <div class="row mt-2" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;">
+            <form class="col-12 col-sm-12" [formGroup]="thirdMultiFormGroup1" (ngSubmit)="onSaveThirdGroupMulti1()" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+              <div class="col-12 col-sm-12" style="padding-left: 0px !important; margin-left: -15px;">
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label d-flex justify-content-end" style="margin-left: 5px;">Name </label>
+                  <div class="col-sm-4">
+                    <input ngbPopover="User visible name for the configuration choice." triggers="mouseenter:mouseleave" placement="right" type="text" placeholder="" formControlName="name" class="form-control" />
+                  </div>
+                  <div class="col-sm-5">
+                      <!-- <button class="float-right" type="submit" mat-button color="primary" style="color: black;" [disableRipple]="true"> Add Multivalue &nbsp; <img src="../../assets/images/add-icon.png" alt="add" /> </button> -->
+                    </div>
+                </div>
+              </div>
+              <div  class="col-12 col-sm-12" style="padding-left: 0px !important; margin-left: -15px;">
+                  <div class="form-group row">
+                    <label class="col-sm-1 col-form-label mt-3 d-flex justify-content-end" style="margin-left: 15px;">Options</label>
+                    <div class="col-sm-4" >
+                        <mat-form-field ngbPopover="User visible choices for this configuration." triggers="mouseenter:mouseleave" placement="right" style="width: 280px; margin-left: 5px;" >
+                          <mat-chip-list #chipList aria-label="Option selection" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                            <mat-chip
+                              *ngFor="let opt of options"
+                              [selectable]="selectable"
+                              [removable]="removable"
+                              (removed)="removeOption(opt)">
+                              {{opt}}
+                              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input
+                              #optionInput
+                              [formControl]="optionCtrl"
+                              [matAutocomplete]="auto"
+                              [matChipInputFor]="chipList"
+                              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                              [matChipInputAddOnBlur]="addOnBlur" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                              (matChipInputTokenEnd)="addOption($event)">
+                          </mat-chip-list>
+                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedOption($event)">
+                            <mat-option *ngFor="let opt of filteredOptions | async" [value]="opt">
+                              {{opt}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                  </div>
+              </div>
+            </form>
+            <button mat-stroked-button style="display: none;" (click)="addNewTab()">Add new tab</button>
+              <div *ngIf="tabs.length > 0" class="col-12 col-sm-12" >
+                <mat-tab-group
+                  class="main-tab-group mt-2"
+                  [selectedIndex]="selectedTab"
+                  (selectedTabChange)="tabChanged($event)">
+                  <mat-tab *ngFor="let tab of tabs; let tabIndex = index">
+                    <ng-template mat-tab-label>{{ tab.title }}
+                      <!-- <i class="material-icons" (click)="removeTab(tabIndex)">
+                        close
+                      </i> -->
+                    </ng-template>
+
+                    <div style="overflow-x: hidden">
+                      <app-tab-content [tab]="tab"></app-tab-content>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+            </div>
+            <input type="hidden" [(ngModel)]="optionId" name="optionId" />
+            
+            <div class="offset-sm-3 col-12 col-sm-8 d-none" *ngIf="mapRoleService_additional_config_multi != null && mapRoleService_additional_config_multi.length > 0" style="padding-left: 0 !important; padding-right: 0 !important; margin-top: 10px;">
+                <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                  <tbody>
+                    <tr style="background-color: #01a982; color: #ffffff;">
+                      <td style="width: 40%" scope="col">Role</td>
+                      <td style="width: 40%" scope="col">Service</td>
+                      <td style="width: 20%" scope="col">Edit</td>
+                      <td style="width: 20%" scope="col">Delete</td>
+                    </tr>
+                    <tr *ngFor="let item of mapRoleService_additional_config_multi; let i = index">
+                        <td class="align-middle">{{item.role_id}}</td>
+                        <td> 
+                            <span *ngFor="let itemService of item.service_ids; let isLast=last">
+                              {{itemService}}{{isLast ? '' : ', '}}
+                            </span>
+                          </td>
+                        <td class="align-middle"> 
+                            <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigMulti(item)" />  &nbsp; 
+                        </td>
+                        <td class="align-middle"> 
+                          <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigMulti(item)" /> 
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="flagButton == true" class="offset-2 offset-sm-2 col-8 col-sm-8" align="right" style="padding-right: 30px !important;">
+              <!-- <button class="float-right" type="submit" mat-button color="primary" style="color: black;" (click)="onSaveThirdGroupMulti1_new()" [disableRipple]="true"> Add Multivalue &nbsp; <img src="../../assets/images/add-icon.png" alt="add" /> </button> -->
+                <button
+                [disabled]="flag_update_multivalue"
+                type="button"
+                (click)="onSaveThirdGroupMulti_TabOption()" 
+                mat-raised-button
+                class="rounded-2"
+                style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Add </button>
+                <button
+                [disabled]="!flag_update_multivalue"
+                type="button"
+                (click)="onUpdateThirdGroupMulti1_TabOption()"
+                mat-raised-button
+                class="rounded-2 ml-3"
+                style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Update </button>
+            </div>
+            <div class="offset-sm-2 col-12 col-sm-9" *ngIf="optionArr != null && optionArr.length > 0" style="padding-left: 0 !important; padding-right: 0 !important; margin-top: 10px;">
+              <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                <tbody>
+                  <tr style="background-color: #01a982; color: #ffffff;">
+                    <td style="width: 40%" scope="col">Option</td>
+                    <td style="width: 40%" scope="col">Role [Service]</td>
+                    <td style="width: 10%" scope="col">Edit</td>
+                    <td style="width: 10%" scope="col">Delete</td>
+                  </tr>
+                  <tr *ngFor="let item of optionArr; let i = index">
+                      <td class="align-middle">{{item.option}}</td>
+                      <td> 
+                        <div *ngFor="let item2 of item.map; let isLast=last">
+                          <span>{{item2.role_id}} [{{item2.service_ids}}]</span>
+                        </div>
+                      </td>
+                      <td class="align-middle"> 
+                          <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditOption(item)" />  &nbsp; 
+                      </td>
+                      <td class="align-middle"> 
+                        <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteOption(item)" /> 
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+
+            <div class="col-12 col-sm-10" *ngIf="additionalConfigMultiArr_TabOption1 != null && additionalConfigMultiArr_TabOption1.length > 0" style="padding-right: 30px !important; margin-top: 10px;">
+                <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                  <tbody>
+                    <tr style="background-color: #01a982; color: #ffffff;">
+                      <td style="width: 20%" scope="col">Name</td>
+                      <td style="width: 20%" scope="col">Option</td>
+                      <td style="width: 20%" scope="col">Selected Roles</td>
+                      <td style="width: 20%" scope="col">Role [Services]</td>
+                      <td style="width: 10%" scope="col">Edit</td>
+                      <td style="width: 10%" scope="col">Delete</td>
+                    </tr>
+                    <tr *ngFor="let item of additionalConfigMultiArr_TabOption1; let i = index">
+
+                       
+                        
+                        <td class="align-middle" [attr.rowspan]="item.nameSpan" *ngIf="item.nameSpan">{{item.name}}</td>
+                        <td class="align-middle">
+                          {{item.option}}
+                        </td>
+                        <td class="align-middle">
+                          {{item.selected_role}}
+                        </td>
+                        <td class="align-middle">
+                            <div *ngFor="let item4 of item.map; let isLast=last">
+                              <span>{{item4.role_id}} [{{item4.service_ids}}]</span>
+                            </div>
+                        </td>
+                        <td class="align-middle" [attr.rowspan]="item.nameSpan" *ngIf="item.nameSpan"> 
+                             <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigMultiArr_TabOption(item.name)"/> 
+                        </td>
+                        <td class="align-middle" [attr.rowspan]="item.nameSpan" *ngIf="item.nameSpan"> 
+                           <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigMultiArr_TabOption(item.name)"/> 
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+            <div style="display: none;" class="col-12 col-sm-11" *ngIf="additionalConfigMultiArr != null && additionalConfigMultiArr.length > 0" style="padding-right: 0 !important; margin-top: 10px;">
+              <table class="table mat-elevation-z2" >
+                <tbody>
+                  <tr style="background-color: #01a982; color: #ffffff;">
+                    <td style="width: 20%" scope="col">Name</td>
+                    <td style="width: 20%" scope="col">Option</td>
+                    <td style="width: 20%" scope="col">Selected Roles</td>
+                    <td style="width: 20%" scope="col">Role [Services]</td>
+                    <td style="width: 10%" scope="col">Edit</td>
+                    <td style="width: 10%" scope="col">Delete</td>
+                  </tr>
+                  <tr *ngFor="let item of additionalConfigMultiArr; let i = index">
+                      <td class="align-middle">{{item.name}}</td>
+                      <td class="align-middle">
+                        {{item.option}}
+                      </td>
+                      <td class="align-middle">
+                        {{item.selected_role}}
+                      </td>
+                      <td class="align-middle">
+                          <div *ngFor="let item4 of item.map; let isLast=last">
+                            <span>{{item4.role_id}} [{{item4.service_ids}}]</span>
+                          </div>
+                      </td>
+                      <td class="align-middle"> 
+                           <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigMultiArr_new(item)"/> 
+                      </td>
+                      <td class="align-middle"> 
+                         <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigMultiArr(item)"/> 
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+
+          </div>
+        </div>
+
+        
+        <!-- Multivalue End-->
+
+        <!-- String Start-->
+        <div *ngIf="displayString" class="col-12 col-sm-12" style="margin-top: 20px;">
+          <div class="row">
+              <h5 class="col-12 font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                String
+                <!-- <span style="border-bottom: 1px solid #01a982; width: 96%; display: block;"></span> -->
+              </h5>
+          </div>
+          <div class="row mt-2" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;">
+            <form class="col-12 col-sm-12" [formGroup]="thirdStringFormGroup1" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+              <div class="form-group row">
+                <label class="col-sm-1 col-form-label d-flex justify-content-end" style="margin-left: 0px; width: 80px; ">Name *</label>
+                <div class="col-sm-4">
+                  <input ngbPopover="User visible name for accepting a string during cluster creation." triggers="mouseenter:mouseleave" placement="right" type="text" placeholder="" formControlName="name" class="form-control" />
+                  <input type="hidden" formControlName="id" class="form-control" />
+                </div>
+                <div class="col-sm-5">
+                  <!-- <button class="float-right" mat-button color="primary" style="color: black;" [disableRipple]="true"> Add String &nbsp; <img src="../../assets/images/add-icon.png" alt="add" /> </button> -->
+                  <button
+                  [disabled]="flag_update_string"
+                  type="button"
+                  (click)="onSaveThirdGroupString()"
+                  mat-raised-button
+                  class="rounded-2"
+                  style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Add </button>
+                  <button
+                  [disabled]="!flag_update_string"
+                  type="button"
+                  (click)="onSaveThirdGroupString()"
+                  mat-raised-button
+                  class="rounded-2 ml-3"
+                  style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Update </button>
+                </div>
+              </div>
+              <div class="col-sm-12 offset-sm-2">
+                
+              </div>
+          
+            </div>
+            </form>
+            
+            <div class="col-12 col-sm-7" *ngIf="mConfigChoices_String != null && mConfigChoices_String.length > 0" style="">
+                <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                  <tbody>
+                    <tr style="background-color: #01a982; color: #ffffff;">
+                      <td style="width: 70%" scope="col">Name</td>
+                      <td style="width: 15%" scope="col">Edit</td>
+                      <td style="width: 15%" scope="col">Delete</td>
+                    </tr>
+                    <tr *ngFor="let item of mConfigChoices_String; let i = index">
+                        <td class="align-middle">{{item.name}}</td>
+                        <td class="align-middle"> 
+                            <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigString(item)" />  &nbsp; 
+                        </td>
+                        <td class="align-middle"> 
+                          <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigString(item)" /> 
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          
+          </div>
+        </div>
+        <!-- String End-->
+        <!-- Password Start-->
+        <div *ngIf="displayPassword" class="col-12 col-sm-12" style="margin-top: 20px;">
+            <div class="row">
+                <h5 class="col-12 font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                  Password
+                  <!-- <span style="border-bottom: 1px solid #01a982; width: 96%; display: block;"></span> -->
+                </h5>
+            </div>
+            <div class="row mt-2" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;">
+            <form class="col-12 col-sm-12" [formGroup]="thirdPasswordFormGroup1" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label d-flex justify-content-end" style="margin-left: 0px; width: 80px;">Name *</label>
+                  <div class="col-sm-4">
+                    <input ngbPopover="User visible name for accepting a password during cluster creation." triggers="mouseenter:mouseleave" placement="right" type="text" placeholder="" formControlName="name" class="form-control" />
+                    <input type="hidden" formControlName="id" class="form-control" />
+                  </div>
+                  <div class="col-sm-5">
+                      <!-- <button class="float-right" mat-button color="primary" style="color: black;" [disableRipple]="true"> Add Password &nbsp; <img src="../../assets/images/add-icon.png" alt="add" /> </button> -->
+                      <button
+                    [disabled]="flag_update_password"
+                    type="button"
+                    (click)="onSaveThirdGroupPassword()"
+                    mat-raised-button
+                    class="rounded-2"
+                    style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Add </button>
+
+                    <button
+                    [disabled]="!flag_update_password"
+                    type="button"
+                    (click)="onSaveThirdGroupPassword()"
+                    mat-raised-button
+                    class="rounded-2 ml-3"
+                    style="background-color: #01a982; color: #ffffff; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Update </button>
+                    </div> 
+                    
+                </div>
+                <div class="col-sm-12 offset-sm-2" >
+                 
+                </div>
+              </div>
+              </form>
+              <div class="col-12 col-sm-7" *ngIf="mConfigChoices_Password != null && mConfigChoices_Password.length > 0" style="">
+                  <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                    <tbody>
+                      <tr style="background-color: #01a982; color: #ffffff;">
+                        <td style="width: 70%" scope="col">Name</td>
+                        <td style="width: 15%" scope="col">Edit</td>
+                        <td style="width: 15%" scope="col">Delete</td>
+                      </tr>
+                      <tr *ngFor="let item of mConfigChoices_Password; let i = index">
+                          <td class="align-middle">{{item.name}}</td>
+                          <td class="align-middle"> 
+                              <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigPassword(item)" />  &nbsp; 
+                          </td>
+                          <td class="align-middle"> 
+                            <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigPassword(item)" /> 
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+          <!-- Password End-->
+          
+             
+        </div>
+</div>
+

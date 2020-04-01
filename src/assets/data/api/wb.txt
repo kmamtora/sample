@@ -1,0 +1,17 @@
+#!/usr/bin/env bdwb
+#
+# YOUR_ORGANIZATION_NAME must be replaced with a valid organization name. Please
+# refer to 'help builder organization' for details.
+#
+builder organization --name Bluedata
+
+catalog load --filepath {jsonfile}
+appconfig package --dir {appconfig}
+logo file --filepath Logo.png
+
+## RHEL  catalog bundle
+image build --basedir image/rhel --image-repotag {repotag}
+image package --image-repotag {repotag} --os rhel7 
+catalog save --filepath staging/{jsonfile} --force
+sources package --additional {appconfig}
+catalog package

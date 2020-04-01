@@ -1,0 +1,182 @@
+<form [formGroup]="form" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+          <div class="container">
+            <div class="row">
+              <h5 class="col font-weight-light" style="color: #333333;">
+                Step 1: Application Details</h5>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-12 col-sm-12">
+
+              
+
+                <div class="form-group">
+                  <label for="appName">What is the Application Name? *</label>
+                  <input
+                    [class.is-invalid]="
+                      _imageDetail_appName.invalid &&
+                      _imageDetail_appName.touched
+                    "
+                    formControlName="appName"
+                    type="text"
+                    class="form-control"
+                    ngbPopover="A short user visible name for the application." triggers="mouseenter:mouseleave"
+                    placeholder="Enter app name"
+                  />
+                  <small
+                    [class.d-none]="
+                      _imageDetail_appName.valid ||
+                      _imageDetail_appName.untouched
+                    "
+                    class="text-danger"
+                  >
+                    Application name is required
+                  </small>
+                </div>
+                <div class="form-group">
+                  <label for="appDescription"
+                    >What is the App Description? *</label
+                  >
+                  <input
+                    [class.is-invalid]="
+                      _imageDetail_appDescription.invalid &&
+                      _imageDetail_appDescription.touched
+                    "
+                    formControlName="appDescription"
+                    type="text"
+                    class="form-control"
+                    id="appDescription"
+                    ngbPopover="Describe the application in a few sentences." triggers="mouseenter:mouseleave"
+                    placeholder="Enter app description"
+                  />
+                  <small
+                    [class.d-none]="
+                      _imageDetail_appDescription.valid ||
+                      _imageDetail_appDescription.untouched
+                    "
+                    class="text-danger"
+                  >
+                    Application description is required
+                  </small>
+                </div>
+                <div class="form-group">
+                  <label for="appVersion">What is the App Version? *</label>
+                  <input
+                    [class.is-invalid]="
+                      _imageDetail_appVersion.invalid &&
+                      _imageDetail_appVersion.touched
+                    "
+                    formControlName="appVersion"
+                    type="text"
+                    (keypress)="numberDotOnly($event)"
+                    class="form-control"
+                    id="appVersion"
+                    ngbPopover="Unique version of the application." triggers="mouseenter:mouseleave"
+                    placeholder="Enter app version"
+                  />
+                  <div
+                    *ngIf="
+                      _imageDetail_appVersion.invalid &&
+                      _imageDetail_appVersion.touched
+                    "
+                  >
+                    <small
+                      *ngIf="_imageDetail_appVersion.errors?.required"
+                      class="text-danger"
+                      >App version is required</small
+                    >
+                    <small
+                      *ngIf="_imageDetail_appVersion.errors?.pattern"
+                      class="text-danger"
+                      >App version must be x.y.z</small
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="appDistroID">What is the Distro-ID? *</label>
+                  <input
+                    [class.is-invalid]="
+                      _imageDetail_appDistroID.invalid &&
+                      _imageDetail_appDistroID.touched
+                    "
+                    formControlName="appDistroID"
+                    type="text"
+                    class="form-control"
+                    id="appDistroID"
+                    ngbPopover="A string uniquely identifying this application to the platform." triggers="mouseenter:mouseleave"
+                    placeholder="Enter Distro-ID"
+                  />
+                  <div
+                    *ngIf="
+                    _imageDetail_appDistroID.invalid &&
+                      _imageDetail_appDistroID.touched
+                    "
+                  >
+                    <small
+                      *ngIf="_imageDetail_appDistroID.errors?.required"
+                      class="text-danger"
+                      >App Distro-ID is required</small
+                    >
+                    <small
+                      *ngIf="_imageDetail_appDistroID.errors?.pattern"
+                      class="text-danger"
+                      >App Distro-ID must be valid</small
+                    >
+                  </div>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="appCategory">Category</label>
+                  <!-- <ng-select formControlName="appCategory" [multiple]="true">
+                    <ng-option *ngFor="let item of mCategoryArr" [value]="item.id" [disabled]="item.disabled">{{item.name}}</ng-option>
+                </ng-select> -->
+                  <!-- Add Category -->
+                  <mat-form-field style="width: 100%;" ngbPopover="Category that the application belongs to." triggers="mouseenter:mouseleave">
+                    
+                    <mat-chip-list  #chipList1 aria-label="Category selection" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                      <mat-chip
+                      
+                        *ngFor="let item of categoryList"
+                        [selectable]="selectable"
+                        [removable]="removable"
+                        (removed)="removeCategory(item)"
+                      >
+                        {{ item }}
+                        <mat-icon matChipRemove *ngIf="removable"
+                          >cancel</mat-icon
+                        >
+                      </mat-chip>
+                      <input
+                        #categoryInput
+                        [formControl]="categoryCtrl"
+                        
+                        [matAutocomplete]="autocategory"
+                        [matChipInputFor]="chipList1"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="addCategory($event)"
+                      />
+                    </mat-chip-list>
+                    <mat-autocomplete
+                      #autocategory="matAutocomplete"
+                      (optionSelected)="selectedCategory($event)" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                    >
+                      <mat-option
+                        *ngFor="let item of filteredCategory | async"
+                        [value]="item"
+                      >
+                        {{ item }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <small
+                    [class.d-none]="!categoryVisible"
+                    class="text-danger"
+                  >
+                    Category is required
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+      </form>

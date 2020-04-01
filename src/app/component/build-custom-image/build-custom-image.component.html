@@ -1,0 +1,136 @@
+<mat-progress-bar
+  *ngIf="loading" color="accent" mode="indeterminate">
+</mat-progress-bar>
+<div class="container-fluid">
+        <div class="row mx-1 mx-sm-5 mt-3">
+            <div class="col-12 col-sm-12">
+            <div class="container">
+                <h4 class="font-weight-light d-flex align-items-center" style="margin-left: 20px;font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> APPWORKBENCH DEPLOYMENT TOOL  </h4> 
+                <!-- <span  style="font-size: 18px;"> &nbsp; > Design your image </span> -->
+            </div>
+            </div>
+        </div>
+        <div class="row mx-1 mx-sm-4">
+            <div class="col-12 col-sm-12">
+                <mat-horizontal-stepper class="container" labelPosition="bottom" #stepper [selectedIndex]="selectedIndex">
+                    <!-- <ng-template matStepperIcon="edit" let-index="index" let-active="active">
+                        <mat-icon *ngIf="index === myStepper._steps.length - 1; else default">done</mat-icon> -->
+                        <!-- <mat-icon *ngIf="index === myStepper.selectedIndex; else default">{{index + 1}}</mat-icon> -->
+                        <!-- <ng-template #default>{{index + 1}}</ng-template>
+                      </ng-template> -->
+
+                     
+                    <mat-step [stepControl]="stepOne" [completed]="false">
+                        <ng-template matStepLabel><span style="color: #9d9d9d;"> APPLICATION DETAILS </span> </ng-template>
+                        <mat-card style="margin-top: 30px;" class="container w-container">
+                            <app-step-image-detail></app-step-image-detail>
+                        </mat-card>
+                        <!-- <button (click)="fnMain()" type="button" mat-raised-button
+                              class="rounded-2 mt-3"
+                              style="background-color: #01a982; color: #ffffff; width: 100px;">Previous2</button> -->
+                        <div class="container w-container mt-3">
+                            <div class="row">
+                                <div class="col-6" style="padding: 0px;">
+                                    <button (click)="fnMain()" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Previous</button>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" style="padding: 0px;">
+                                <button (click)="fnNext(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </mat-step>
+                    <mat-step [stepControl]="stepTwo" [completed]="false">
+                        <ng-template matStepLabel><span style="color: #9d9d9d;">SERVICES & ROLES </span> </ng-template>
+                        <mat-card class="mt-1 mt-sm-1 container w-container" >
+                            <app-step-service-role></app-step-service-role>
+                        </mat-card>
+                        <div class="container w-container mt-3">
+                            <div class="row">
+                                <div class="col" style="padding: 0px;">
+                                     <button (click)="fnPrevious(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Previous</button>
+                        
+                                </div>
+                                <div class="col d-flex justify-content-end" style="padding: 0px;">
+                                    <button (click)="fnNext(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </mat-step>
+                    <mat-step [stepControl]="stepThree" [completed]="false">
+                        <ng-template matStepLabel><span style="color: #9d9d9d;">CONFIG CHOICES</span></ng-template>
+                        <mat-card class="mt-1 mt-sm-1 container w-container">
+                            <app-step-config-choice></app-step-config-choice>
+                        </mat-card>
+                        <div class="container w-container mt-3">
+                            <div class="row">
+                                <div class="col" style="padding: 0px;">
+                                     <button (click)="fnPrevious(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Previous</button>
+                        
+                                </div>
+                                <div class="col d-flex justify-content-end" style="padding: 0px;">
+                                    <button (click)="fnNext(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="stepFour" [completed]="false">
+                        <ng-template matStepLabel><span style="color: #9d9d9d;">CONTAINER IMAGE APP CONFIG</span></ng-template>
+                        <mat-card class="mt-1 mt-sm-1 container w-container">
+                            <app-step-container-app-config></app-step-container-app-config>
+                        </mat-card>
+                        <div class="container w-container mt-3">
+                            <div class="row">
+                                <div class="col" style="padding: 0px;">
+                                     <button (click)="fnPrevious(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Previous</button>
+                        
+                                </div>
+                                <div class="col d-flex justify-content-end" style="padding: 0px;">
+                                    <button (click)="fnNext(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="stepFive" [completed]="false">
+                        <ng-template matStepLabel><span style="color: #9d9d9d;">BUILD</span></ng-template>
+                        <mat-card class="mt-1 mt-sm-1 container w-container">
+                            <app-step-build></app-step-build>
+                        </mat-card>
+                        <div class="container w-container mt-3">
+                            <div class="row">
+                                <div class="col" style="padding: 0px;">
+                                     <button (click)="fnPrevious(stepper)" type="button" mat-raised-button
+                              class="rounded-2"
+                              style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Previous</button>
+                        
+                                </div>
+                                <div class="col d-flex justify-content-end" style="padding: 0px;">
+                              <button type="button" mat-raised-button class="float-sm-right float-left rounded-2" [routerLink]="['/index']"
+                            style="background-color: #01a982; color: #ffffff; right: 0px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" >Home</button>    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </mat-step>
+                    
+                </mat-horizontal-stepper>
+            </div>
+        </div>
+    </div>

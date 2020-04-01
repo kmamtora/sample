@@ -1,0 +1,482 @@
+
+    <div class="container" >
+        <div class="row">
+            <h5 class="col font-weight-light" style="color: #333333;">Step 2: Services & Roles</h5>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <mat-accordion multi="true">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                        <mat-panel-title style="color: #222; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" >
+                            What services does your app contain?
+                        </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="container">
+                        <form [formGroup]="secondFormGroupService" (ngSubmit)="onAddService()" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                            <input type="hidden" formControlName="service_id" />
+                            <div class="row" style="border:1px solid #8e98a1; padding-left: 10px; padding-top: 15px; padding-right: 10px; margin-bottom: 10px; border-radius: 4px;">
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Name *</label>
+                                    <div class="col-sm-4">
+                                        <input for="serviceName" type="text" class="form-control" [class.is-invalid]="_serviceRoles_serviceName.invalid && _serviceRoles_serviceName.touched"
+                                        formControlName="serviceName" name="serviceName"
+                                        ngbPopover="Name of the service." triggers="mouseenter:mouseleave" />
+                                        <small [class.d-none]="_serviceRoles_serviceName.valid || _serviceRoles_serviceName.untouched" class="text-danger"> Name is required </small>
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Port </label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" [class.is-invalid]="_serviceRoles_servicePort.invalid && _serviceRoles_servicePort.touched" (keypress)="numberOnly($event)" formControlName="servicePort"
+                                        ngbPopover="Port number of the service." triggers="mouseenter:mouseleave" />
+                                        <div *ngIf="_serviceRoles_servicePort.invalid && _serviceRoles_servicePort.touched">
+                                        <!-- <small *ngIf="_serviceRoles_servicePort.errors?.required" class="text-danger">Port is required</small> -->
+                                        <small *ngIf="_serviceRoles_servicePort.errors?.pattern" class="text-danger">Port entered is invalid</small>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Display</label>
+                                    <div class="col-sm-4" style="margin-top: 7px; margin-left: -7px;">
+                                        <mat-checkbox formControlName="serviceDisplay" labelPosition="before" (change)="onChangeDisplay($event)"
+                                        ngbPopover="Select if the application URL should be displayed to the end user." triggers="mouseenter:mouseleave">
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="isShownPath" class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Scheme</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" formControlName="serviceSchema" ngbPopover="http/https." triggers="mouseenter:mouseleave"/>
+                                    </div>
+                                    </div>
+                            </div>
+                            <div *ngIf="isShownPath" class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Path</label>
+                                    <div class="col-sm-4">
+                                        <input  type="text" formControlName="servicePath" class="form-control" [class.is-invalid]="_serviceRoles_servicePath.invalid && _serviceRoles_servicePath.touched"/>
+                                        <small [class.d-none]="_serviceRoles_servicePath.valid || _serviceRoles_servicePath.untouched || !displayPath" class="text-danger">
+                                            Please enter valid path
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Systemd</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" formControlName="systemd" ngbPopover="Systemd unit name for the service." triggers="mouseenter:mouseleave"/>
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Auth Token</label>
+                                    <div class="col-sm-4" style="margin-top: 7px;">
+                                        <mat-checkbox formControlName="authToken" ngbPopover="Service used authentication tokens." triggers="mouseenter:mouseleave"></mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Load Balanced</label>
+                                    <div class="col-sm-4" style="margin-top: 7px;">
+                                        <mat-checkbox formControlName="loadBalanced" ngbPopover="Service" triggers="mouseenter:mouseleave"></mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <div class="form-group row">
+                                    <button
+                                    [disabled]="editmodeService"
+                                    type="submit"
+                                    mat-raised-button
+                                    class="ml-3 rounded-2"
+                                    style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Add </button>
+                                    <button
+                                    [disabled]="!editmodeService"
+                                    type="button"
+                                    mat-raised-button
+                                    class="ml-3 rounded-2"
+                                    style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" (click)="onUpdateService()">Update </button>
+                                    <button
+                                    type="button"
+                                    mat-raised-button
+                                    class="ml-3 rounded-2"
+                                    style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" (click)="onResetService()"> Reset </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="row" *ngIf="mServiceDataSource1 != null && mServiceDataSource1.length > 0">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <table style="width: 100%" class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                            <tbody>
+                                <tr style="background-color: #01a982; color: #ffffff;">
+                                <td style="width: 16%" scope="col">Service Id</td>
+                                <td style="width: 22%" scope="col">Name</td>
+                                <td style="width: 10%" scope="col">Port</td>
+                                <td style="width: 16%" scope="col">Scheme</td>
+                                <td style="width: 16%" scope="col">Systemd</td>
+                                <td style="width: 10%" scope="col">Edit</td>
+                                <td style="width: 10%" scope="col">Delete</td>
+                                </tr>
+                                <tr *ngFor="let item of mServiceDataSource1">
+                                <td >{{item.srvcid}}</td>
+                                <td >{{item.name}}</td>
+                                <td >{{item.port}}</td>
+                                <td >{{item.scheme}}</td>
+                                <td >{{item.sysctl}}</td>
+                                <td >
+                                    <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditService(item)" />
+                                </td>
+                                <td >
+                                    <img src="../../assets/images/delete-btn.png" alt="delete" style="cursor: pointer;" (click)="onDeleteService(item)" />
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+
+                        </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                        <mat-panel-title style="color: #222; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" >
+                            What roles does your app contain?
+                        </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="container">
+                        <form [formGroup]="secondFormGroupRoleNew" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                <input type="hidden" formControlName="role_id" />
+                                <div style="border:1px solid #8e98a1; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin-bottom: 10px; border-radius: 4px;" class="row" >
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Role Name *</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" formControlName="roleName"
+                                        ngbPopover="Name of the role." triggers="mouseenter:mouseleave" />
+                                        <!-- <span *ngIf="secondFormGroupRoleNew.get('roleName').dirty"> -->
+                                        <small [class.d-none]="_serviceRoles_roleName.valid || _serviceRoles_roleName.untouched" class="text-danger"> Role Name is required </small>
+                                        <!-- <small class="error" *ngIf="secondFormGroupRoleNew.get('roleName').hasError('required')">Role Name is required</small> -->
+                                        <!-- </span> -->
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Minimum Resource</label>
+
+                                    <div class="col-sm-4">
+                                        <div style="border:1px solid #8e98a1; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin-bottom: 10px; border-radius: 4px;" >
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label d-flex justify-content-end"> CPU Size (Cores) </label>
+                                                <div class="col-sm-6">
+                                                    <input [class.is-invalid]="_serviceRoles_roleCpu.invalid && _serviceRoles_roleCpu.touched" type="number" min="1" class="form-control" (keypress)="numberOnly($event)" formControlName="roleCpu"
+                                                    ngbPopover="Minimum cores required for the role." triggers="mouseenter:mouseleave" />
+                                                    <small [class.d-none]="_serviceRoles_roleCpu.valid || _serviceRoles_roleCpu.untouched" class="text-danger"> CPU Size (Cores) is invalid </small>
+                                                </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-6 col-form-label d-flex justify-content-end"> RAM Size (MB) </label>
+                                                    <div class="col-sm-6">
+                                                    <input [class.is-invalid]="_serviceRoles_roleRam.invalid && _serviceRoles_roleRam.touched" type="number" min="1" class="form-control" (keypress)="numberOnly($event)" formControlName="roleRam"
+                                                    ngbPopover="Minimum memory required for the role." triggers="mouseenter:mouseleave" />
+                                                    <small [class.d-none]="_serviceRoles_roleRam.valid || _serviceRoles_roleRam.untouched" class="text-danger"> CPU Size (Cores) is invalid </small>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                    <label class="col-sm-2 mt-1 col-form-label d-flex justify-content-end">Cardinality *</label>
+                                    <div class="col-sm-4">
+                                            <mat-form-field style="width: 100%; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Number of nodes allowed for the role." triggers="mouseenter:mouseleave">
+                                                <mat-chip-list #chipList3 aria-label="Cardinality selection">
+                                                <mat-chip
+                                                    *ngFor="let item of car"
+                                                    [selectable]="selectable"
+                                                    [removable]="removable"
+                                                    (removed)="removeCar(item)">
+                                                    {{item}}
+                                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                </mat-chip>
+                                                <input
+                                                    #carInput
+                                                    formControlName="roleCardinality"
+                                                    (keypress)="numberPlusOnly($event)"
+                                                    [matAutocomplete]="autoCar"
+                                                    [matChipInputFor]="chipList3"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                    [matChipInputAddOnBlur]="addOnBlur"
+                                                    (matChipInputTokenEnd)="addCar($event)">
+                                                </mat-chip-list>
+                                                <mat-autocomplete #autoCar="matAutocomplete" (optionSelected)="selectedCar($event)">
+                                                <mat-option *ngFor="let item of filteredCar | async" [value]="item">
+                                                    {{item}}
+                                                </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                            <small [class.d-none]="_serviceRoles_roleCardinality.valid || _serviceRoles_roleCardinality.untouched" class="text-danger"> Cardinality is required </small>
+                                            <small [class.d-none]="!cardinalitySingle" class="text-danger"> Cardinality must be valid </small>
+
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Anti-affinity</label>
+                                    <div class="col-sm-4 mt-1">
+                                        <mat-slide-toggle ngbPopover="Determines if this role should be physically separated from others with anti-affinity enabled." triggers="mouseenter:mouseleave" formControlName="roleAntiaffinity" [checked]="useDefaultAntiaffinity" (change)="toggleAntiAffinity($event)"> <div *ngIf="lblAntiAffinity">Enable</div><div style="margin-top: 2px;" *ngIf="!lblAntiAffinity">Disable</div> </mat-slide-toggle>
+                                        <!-- <input type="text" class="form-control" formControlName="roleAntiaffinity" /> -->
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label d-flex justify-content-end">Container Image</label>
+                                    <div class="col-sm-4 mt-2">
+                                        <mat-radio-group formControlName="roleDockerRegisteryLocal" (change)="onDockerRegisteryLocal($event)">
+                                            <mat-radio-button style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Use an existing container image from a registry." triggers="mouseenter:mouseleave" value="Registry">Registry</mat-radio-button>
+                                            &nbsp;
+                                            <mat-radio-button style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Build a container image locally." triggers="mouseenter:mouseleave" value="Local">Build</mat-radio-button>
+                                            &nbsp;
+                                            <mat-radio-button style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Use the global container image for this role." triggers="mouseenter:mouseleave" value="None">None</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="dockerRegisteryLocal == 1" class="col-12 col-sm-12" style="padding-left: 0px !important;">
+
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-2">
+                                            <label class="col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Base Directory</label>
+                                        </div>
+                                        <div class="col-12 col-sm-8">
+                                            <button class="rounded-2" mat-raised-button ngbPopover="Base directory to build the container image." triggers="mouseenter:mouseleave" (click)="fnBaseDirClick()" style="background-color: #01a982; color: #ffffff; width: 150px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                                Browse
+                                            </button>
+                                            <!-- <button mat-raised-button (click)="buildFile.click()" style="background-color: #01a982; color: #ffffff; width: 150px;">
+                                                Browse
+                                            </button>
+                                            <input style="display: none" type='file' (change)="onFileChanged($event)" webkitdirectory directory multiple  #buildFile /> -->
+                                            <span *ngIf="local_base_dir !== ''">
+                                                &nbsp; &nbsp; {{local_base_dir}}
+                                            </span>
+                                            <small [class.d-none]="!errorBaseDirectory" class="text-danger"> Base Directory is required </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-2">
+                                            <label class="col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Image Repo Tag</label>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <input type="text" class="form-control" name="local_repo_tag"
+                                            ngbPopover="Container name and tag of the form REPOSITORY:TAG" triggers="mouseenter:mouseleave"
+                                            [pattern]="repoTagPattern" #l_repo_tag="ngModel"
+                                            [class.is-invalid]="l_repo_tag.invalid && l_repo_tag.touched"
+                                            style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                                            [(ngModel)]="local_repo_tag" [ngModelOptions]="{standalone: true}"/>
+                                            <small *ngIf="l_repo_tag.errors?.pattern" class="text-danger">
+                                                Please enter valid repo tag
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                    <div class="form-group row">
+                                        <div class="col-12 col-sm-2">
+                                            <label class="col-form-label mt-2 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">OS Type</label>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <mat-form-field style="width: 100%; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                                <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" name="selected_local" ngbPopover="OS distribution of the container image." triggers="mouseenter:mouseleave" [(ngModel)]="local_os_type_value" [ngModelOptions]="{standalone: true}">
+                                                    <mat-option *ngFor="let item of selected_local_os_type_arr" [value]="item">{{item}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+
+                                <div *ngIf="dockerRegisteryLocal == 2" class="col-12 col-sm-12" style="padding-left: 0px !important;">
+
+                                    <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                        <div class="form-group row">
+                                            <div class="col-12 col-sm-2">
+                                                <label class="col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Image Repo Tag</label>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <input type="text" class="form-control"
+                                                ngbPopover="Container name and tag of the form REPOSITORY:TAG" triggers="mouseenter:mouseleave"
+                                                [pattern]="repoTagPattern" #r_repo_tag="ngModel"
+                                                [class.is-invalid]="r_repo_tag.invalid && r_repo_tag.touched"
+                                                [(ngModel)]="registry_repo_tag"
+                                                style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                                                [ngModelOptions]="{standalone: true}"/>
+                                                <small *ngIf="r_repo_tag.errors?.pattern" class="text-danger">
+                                                    Please enter valid repo tag
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                        <div class="form-group row">
+                                            <div class="col-12 col-sm-2">
+                                                <label class="col-form-label mt-2 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">OS Type</label>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <mat-form-field style="width: 100%; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                                    <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" name="selected_registery" ngbPopover="OS distribution of the container image." triggers="mouseenter:mouseleave" [(ngModel)]="registry_os_type_value" [ngModelOptions]="{standalone: true}">
+                                                        <mat-option *ngFor="let item of selected_registry_os_type_arr" [value]="item">{{item}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Registry Url</label>
+                                            <div class="col-12 col-sm-4">
+                                               <input style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Container registry URL." triggers="mouseenter:mouseleave" type="text" class="form-control" [(ngModel)]="url" [ngModelOptions]="{standalone: true}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Content Trust</label>
+                                            <div class="col-12 col-sm-4 mt-2">
+                                               <mat-checkbox  ngbPopover="Is content trust enabled on the image?" triggers="mouseenter:mouseleave" [(ngModel)]="contentTrust" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end">Authentication</label>
+                                            <div class="col-12 col-sm-4 mt-2">
+                                               <mat-checkbox ngbPopover="Is authentication enabled on the registry?" triggers="mouseenter:mouseleave" [(ngModel)]="authentication" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-12 col-sm-12" style="padding-left: 0px !important;">
+                                <button
+                                [disabled]="editmodeRole"
+                                mat-raised-button
+                                class="rounded-2 ml-3"
+                                style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                                (click)="onAddRole()"> Add </button>
+
+                                <button
+                                [disabled]="!editmodeRole"
+                                mat-raised-button
+                                class="rounded-2 ml-3"
+                                style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                                (click)="onUpdateRole()"> Update </button>
+
+                                <button
+                                    type="button"
+                                    mat-raised-button
+                                    class="ml-3 rounded-2"
+                                    style="background-color: #01a982; color: #ffffff; width: 100px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" (click)="onResetRole()"> Reset </button>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="row" *ngIf="mRoleDataSource1 != null && mRoleDataSource1.length > 0">
+                            <table class="table mat-elevation-z2" style="overflow-x: auto; display: block; white-space: nowrap; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                            <tbody>
+                                <tr style="background-color: #01a982; color: #ffffff;">
+                                <td scope="col">Role Name</td>
+                                <td scope="col">CPU Size (Cores)</td>
+                                <td scope="col">RAM Size (MB)</td>
+                                <td scope="col">Cardinality</td>
+                                <td scope="col">Anti-affinity</td>
+                                <td scope="col">Container Image</td>
+                                <td scope="col">Base Directory</td>
+                                <td scope="col">Repo tag</td>
+                                <td scope="col">Edit</td>
+                                <td scope="col">Delete</td>
+                                </tr>
+                                <tr *ngFor="let item of mRoleDataSource1">
+                                <td class="col-2">{{item.name}}</td>
+                                <td class="col-1">{{item.min_cores}}</td>
+                                <td class="col-1">{{item.min_memory}}</td>
+                                <td class="col-1">{{item.cardinality}}</td>
+
+                                <td class="col-1" *ngIf="item.anti_affinity_group_id === true">Enable</td>
+                                <td class="col-1" *ngIf="item.anti_affinity_group_id === false">Disable</td>
+                                <td class="col-1">
+                                        <div *ngIf="fnHasKeyBuildOrLoad(item.image) === 'Local'">
+                                            Build
+                                        </div>
+                                        <div *ngIf="fnHasKeyBuildOrLoad(item.image) === 'Registry'">
+                                            Registry
+                                        </div>
+                                        <div *ngIf="fnHasKeyBuildOrLoad(item.image) === 'None'">
+                                            None
+                                        </div>
+
+                                </td>
+                                <td class="col-2">
+                                    <div *ngIf="item.image !== null">
+                                        <div *ngIf="fnHasKeyBuildOrLoad(item.image) === 'Local'">
+                                            {{item.image.build.basedir}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="col-2">
+                                    <div *ngIf="item.image !== null">
+                                        <div *ngIf="fnHasKeyBuildOrLoad(item.image) === 'Local'">
+                                            {{item.image.build.repotag}}
+                                        </div>
+                                        <div *ngIf="fnHasKeyBuildOrLoad(item.image) === 'Registry'">
+                                            {{item.image.load.repotag}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="col-1"> <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditRole(item)" />
+                                </td>
+                                <td class="col-1"> <img src="../../assets/images/delete-btn.png" alt="delete" style="cursor: pointer;" (click)="onRemoveRole(item)" />
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
+
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,197 @@
+<div class="container">
+    <div class="row">
+      <h5 class="col font-weight-light" style="color: #333333; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Step 4: Container Image App Config</h5>
+    </div>
+
+    <div class="row mt-3" style="border:1px solid #8e98a1; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 15px; margin: 2px; border-radius: 4px;">
+        <div class="col-12 col-sm-12">
+            <div class="form-group row">
+                <label class="col-12 col-sm-2 col-form-label d-flex justify-content-start" style="padding-left: 5px; max-width: 125px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Container Image</label>
+                <div class="col-12 col-sm-9 mt-2">
+                    <mat-radio-group  [(ngModel)]="selected_container_val" (change)="onChangeSelectedContainer($event)">
+                        <mat-radio-button style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Use an existing container image from a registry." triggers="mouseenter:mouseleave" value="Registry">Registry</mat-radio-button>
+                        &nbsp;
+                        <mat-radio-button style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Build a container image locally." triggers="mouseenter:mouseleave" value="Local">Build</mat-radio-button>
+                        &nbsp;
+                        <mat-radio-button style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Use the global container image for this role." triggers="mouseenter:mouseleave" value="None">None</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="container_flag === 1" class="col-12 col-sm-12">
+            <div class="form-group row">
+                <!-- <label class="col-12 col-sm-2 col-form-label mt-sm-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Build an Image</label> -->
+                <div class="col-12 col-sm-12" style="padding-left: 0; margin-left: -10px;">
+                    <label class="col-12 col-sm-2 col-form-label d-flex justify-content-start" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Build an Image</label>
+                </div>
+                <div class="col-12 col-sm-12" style="border: solid 1px #8e98a1; border-radius: 4px;">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="form-group row">
+                            <!-- <label class="col-12 col-sm-3 col-form-label">Docker file path</label> -->
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Base Directory</label>
+                            <div class="col-12 col-sm-9">
+                                <button class="rounded-2" mat-raised-button (click)="fnBaseDirClick()"
+                                ngbPopover="Base directory to build the container image." triggers="mouseenter:mouseleave"
+                                 style="background-color: #01a982; color: #ffffff; width: 150px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    Browse
+                                </button>
+                                <span *ngIf="build_base_dir !== ''" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    &nbsp; &nbsp; {{build_base_dir}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Image Repo tag</label>
+                            <div class="col-12 col-sm-9">
+                               <input type="text" class="form-control"
+                               style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                               ngbPopover="Container name and tag of the form REPOSITORY:TAG" triggers="mouseenter:mouseleave"
+                                [(ngModel)]="build_repo_tag" [pattern]="repoTagPattern" #b_repo_tag="ngModel"
+                               [class.is-invalid]="b_repo_tag.invalid && b_repo_tag.touched"
+                                [ngModelOptions]="{standalone: true}"/>
+                               <small *ngIf="b_repo_tag.errors?.pattern" class="text-danger">
+                                   Please enter valid repo tag
+                               </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label mt-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">OS Type</label>
+                            <div class="col-12 col-sm-9">
+                               <mat-form-field style="width: 280px;">
+                                    <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="OS distribution of the container image." triggers="mouseenter:mouseleave" name="selected_container" [(ngModel)]="build_os_type_value">
+                                        <mat-option *ngFor="let item of selected_build_os_type_arr" [value]="item">{{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="container_flag === 2" class="col-12 col-sm-12">
+            <div class="form-group row">
+                <!-- <label class="col-12 col-sm-2 col-form-label mt-sm-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Pull from registry</label> -->
+                <div class="col-12 col-sm-12" style="padding-left: 0; margin-left: -10px;">
+                    <label class="col-12 col-sm-2 col-form-label d-flex justify-content-start" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Pull from registry</label>
+                </div>
+                <div class="col-12 col-sm-12" style="border: solid 1px #8e98a1; border-radius: 4px;">
+
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Image Repo tag</label>
+                            <div class="col-12 col-sm-4">
+                               <input type="text" class="form-control"
+                               style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"
+                               ngbPopover="Container name and tag of the form REPOSITORY:TAG" triggers="mouseenter:mouseleave"
+                                [(ngModel)]="registry_repo_tag" [pattern]="repoTagPattern" #r_repo_tag="ngModel"
+                               [class.is-invalid]="r_repo_tag.invalid && r_repo_tag.touched"
+                                [ngModelOptions]="{standalone: true}"/>
+                               <small *ngIf="r_repo_tag.errors?.pattern" class="text-danger">
+                                   Please enter valid repo tag
+                               </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label mt-3 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">OS Type</label>
+                            <div class="col-12 col-sm-9">
+                               <mat-form-field style="width: 280px;">
+                                    <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="OS distribution of the container image." triggers="mouseenter:mouseleave" name="selected_container" [(ngModel)]="registry_os_type_value">
+                                        <mat-option *ngFor="let item of selected_registry_os_type_arr" [value]="item">{{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Registry Url</label>
+                            <div class="col-12 col-sm-4">
+                               <input style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" type="text" ngbPopover="Container registry URL." triggers="mouseenter:mouseleave" class="form-control" [(ngModel)]="url" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Content Trust</label>
+                            <div class="col-12 col-sm-4 mt-2">
+                               <mat-checkbox ngbPopover="Is content trust enabled on the image?" triggers="mouseenter:mouseleave" [(ngModel)]="contentTrust"></mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Authentication</label>
+                            <div class="col-12 col-sm-4 mt-2">
+                               <mat-checkbox ngbPopover="Is authentication enabled on the registry?" triggers="mouseenter:mouseleave" [(ngModel)]="authentication"></mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12">
+            <div class="form-group row">
+                <div class="col-12 col-sm-12" style="border: solid 1px #8e98a1; border-radius: 4px;">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">App Config Path</label>
+                            <div class="col-12 col-sm-9">
+                                <button class="rounded-2" mat-raised-button (click)="fnAppConfigClick()"
+                                ngbPopover="Directory path to the application configuration scripts." triggers="mouseenter:mouseleave"
+                                 style="background-color: #01a982; color: #ffffff; width: 150px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    Browse
+                                </button>
+                                <span *ngIf="appConfigPath !== ''" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    &nbsp; &nbsp; {{appConfigPath}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Documentation File</label>
+                            <div class="col-12 col-sm-9">
+                               <button class="rounded-2" mat-raised-button (click)="openDialogEditor()"
+                               ngbPopover="Edit/Add markup text for application’s documentation." triggers="mouseenter:mouseleave"
+                               style="background-color: #01a982; color: #ffffff; width: 150px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Editor</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-2 col-form-label d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Logo File *</label>
+                            <div class="col-12 col-sm-9">
+                                <button class="rounded-2" mat-raised-button ngbPopover="User visible 400px X 200px logo." triggers="mouseenter:mouseleave" (click)="imageFile.click()" style="background-color: #01a982; color: #ffffff; width: 150px; font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    Upload
+                                </button>
+                                <input style="display: none" type='file' (change)="onImageFileChanged($event)" accept=".png,.jpg,.jpeg" #imageFile />
+                                <span *ngIf="imagePreview !== ''" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    &nbsp; &nbsp; {{imagePreview}}
+                                </span>
+                                <span *ngIf="error_logo !== ''" class="text-danger" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+                                    &nbsp; &nbsp; {{error_logo}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

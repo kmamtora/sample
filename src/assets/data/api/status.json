@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Spark 1.2.3",
+        "status": "Completed",
+        "binPath": "../../assets/data/api/bin.txt"
+    },{
+        "name" : "AppName",
+        "description" : "Description of the app",
+        "version" : "1.2",
+        "status" : "building|complete|error",
+        "status_msg" : "Initializing|Compiling|Packaging|Failed: reason",
+        "status_time" : 1579277849,
+        "binary" : "deliverables/bdcatalog-centos7-bluedata-helloworld-2.3.bin",
+        "percent_complete" : 40
+    }
+]

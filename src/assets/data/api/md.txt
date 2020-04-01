@@ -1,0 +1,28 @@
+# Overview
+
+## What is {name}?
+
+# Details:
+## Application Image Details:
+
+### AppName: 
+{name}
+### DistroId:
+{distroid}
+### Version: 
+{version}
+
+### Cluster Type: 
+
+### Software Included: 
+
+### Systemctl service names and commands:  
+
+### OS: 
+
+## Testcases:
+
+## Prerequisites:
+
+## Release notes:
+

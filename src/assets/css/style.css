@@ -1,0 +1,60 @@
+.mat-card {
+  padding: 100px
+}
+.mat-step-header {
+  pointer-events: none !important;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* icon inside input */
+/* style icon */
+.inner-addon .fa {
+position: absolute;
+padding: 10px;
+pointer-events: none;
+}
+
+/* align icon */
+.left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+/* end icon inside input */
+
+.form-control:focus {
+  border-color: #01a982 !important;
+}
+
+.bg-green {
+  background-color: #01a982 !important;
+}
+
+.color-green {
+  color: #222 !important;
+}
+
+.container .multiselect-dropdown .dropdown-btn .selected-item {
+  border: 1px solid #01a982 !important;
+  background: #01a982 !important;
+  border-radius: 4px !important;
+}
+
+.multiselect-item-checkbox input[type='checkbox']:focus + div:before,
+.multiselect-item-checkbox input[type='checkbox']:hover + div:before {
+  border-color: #01a982 !important;
+}
+
+.multiselect-item-checkbox input[type='checkbox']:checked + div:before {
+  background: #01a982 !important;
+}
+
+.multiselect-item-checkbox input[type='checkbox'] + div:before {
+  color: #01a982 !important;
+  border: 2px solid #01a982 !important;
+}

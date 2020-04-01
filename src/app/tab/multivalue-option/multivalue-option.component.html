@@ -1,0 +1,92 @@
+<div class="row" style="overflow-x: hidden; padding-bottom: 0">
+    <div class="col-12 col-sm-12 mt-4" style="margin-left: -15px;">
+        <div class="form-group row" style="margin-bottom: 0px">
+            <label class="col-sm-2 col-form-label mt-4 d-flex justify-content-end" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Additional Roles</label>
+            <div class="col-sm-4 mt-2">
+                <mat-form-field style="width: 280px;">
+                  <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" ngbPopover="Additional roles to be enabled." placement="right" triggers="mouseenter:mouseleave" name="selected_role_multi" [(ngModel)]="selected_role_additional_config_value_multi" multiple>
+                    <mat-option (onSelectionChange)="onChangeSelectedRoleAdditionalConfigMulti($event)" *ngFor="let role of selected_role_default_config" [value]="role">{{role}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 mt-4">
+              <small *ngIf="error_additionalRole_multivalue !== ''" class="text-danger">{{error_additionalRole_multivalue}}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12" style="margin-left: -15px;">
+        <div class="form-group row" >
+            <label class="col-form-label d-flex justify-content-end" style="width: 159px !important; max-width: 200px !important; padding-right: 15px;font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif; padding-right: 0">
+              <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                  Additional Role to
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  Service Mapping *
+                </div>
+              </div>
+              &nbsp;
+              <i> <img src="../../../assets/images/tool-tip.png" alt="info" ngbPopover="Additional services for roles selected." triggers="mouseenter:mouseleave" placement="right" />  </i></label>
+          
+            <div class="col-12 col-sm-8">
+              <div style="border:1px solid #8e98a1; padding-top: 15px; padding-left: 15px; padding-right: 15px; margin: 0px; border-radius: 4px;">
+                <div class="form-group row" style="margin-bottom: 0; padding-left: 0px">
+                  <div class="order-0">
+                    <label class="col-form-label mr-3 mr-sm-3 ml-2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">Role </label>
+                    <mat-form-field style="margin-top: -10px; width: 200px;">
+                      <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" name="role" [(ngModel)]="additionalConfigMulti.role">
+                        <mat-option (onSelectionChange)="onChangeRoleServiceMapAdditionalConfigMulti($event)" *ngFor="let role of selected_role_additional_config_value_multi" [value]="role">{{role}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <small class="text-danger" *ngIf="error_map_role_multivalue != ''">{{error_map_role_multivalue}}</small>
+                  </div>
+                  <div class="order-1">
+                    <label class="col-form-label mr-3 mr-sm-3 ml-2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;"> Service </label>
+                    <mat-form-field style="margin-top: -10px; width: 200px;">
+                      <mat-select style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;" name="service" [(ngModel)]="additionalConfigMulti.service" multiple>
+                        <mat-option *ngFor="let service of service_default_config" [value]="service">{{service}}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                  <small class="text-danger" *ngIf="error_map_service_multivalue != ''">{{error_map_service_multivalue}}</small>
+                  </div>
+                  <div class="order-2 ml-2">
+                    <img *ngIf="!additionalConfigMultiUpdateFlag" style="cursor: pointer;" class="mb-3 mt-sm-3 " src="../../assets/images/add-row-icon.png" alt="add" ngbPopover="Map Services to Role" triggers="mouseenter:mouseleave" placement="right" (click)="onMapRoleServiceAdditionalConfigMulti()" />
+                    <img *ngIf="additionalConfigMultiUpdateFlag" style="cursor: pointer;" class="mb-3 mt-sm-3" src="../../assets/images/update-icon.png" alt="update" ngbPopover="Map Services to Role" triggers="mouseenter:mouseleave" placement="right" (click)="onMapRoleServiceAdditionalConfigMulti()" />
+                  </div>
+                </div>
+              </div>
+
+          </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12" style="margin-left: -15px; margin-bottom: 0px">
+        <!-- <label class="col-sm-2 col-form-label mt-3 d-flex justify-content-end"></label> -->
+        <div class="offset-2 offset-sm-2  col-12 col-sm-8" *ngIf="mapRoleService_additional_config_multi != null && mapRoleService_additional_config_multi.length > 0" style="padding-left: 0; padding-right: 0;">
+        <!-- <div class="col-12 col-sm-8" [style.display]="'none'" style="margin-top: 10px;"> -->
+        <table class="table mat-elevation-z2" style="font-family:MetricHPE-Web-Regular, Roboto, Helvetica, Arial, sans-serif;">
+        <tbody>
+            <tr style="background-color: #01a982; color: #ffffff;">
+            <td style="width: 40%" scope="col">Role</td>
+            <td style="width: 40%" scope="col">Service</td>
+            <td style="width: 20%" scope="col">Edit</td>
+            <td style="width: 20%" scope="col">Delete</td>
+            </tr>
+            <tr *ngFor="let item of mapRoleService_additional_config_multi; let i = index">
+                <td class="align-middle">{{item.role_id}}</td>
+                <td> 
+                    <span *ngFor="let itemService of item.service_ids; let isLast=last">
+                    {{itemService}}{{isLast ? '' : ', '}}
+                    </span>
+                </td>
+                <td class="align-middle"> 
+                    <img style="cursor: pointer;" src="../../assets/images/edit-btn.png" alt="edit" (click)="onEditAdditionalConfigMulti(item)" />  &nbsp; 
+                </td>
+                <td class="align-middle"> 
+                <img style="cursor: pointer;" src="../../assets/images/delete-btn.png" alt="delete" (click)="onDeleteAdditionalConfigMulti(item)" /> 
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    </div>
+</div>

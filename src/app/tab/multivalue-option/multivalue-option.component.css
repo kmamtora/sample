@@ -1,0 +1,23 @@
+:host >>> .popover {
+    background-color: #01a9829f;
+    border-radius: 0.0rem;
+    border: none;
+    text-align: left;
+    width: auto;
+    height: auto;
+  
+}
+
+:host >>> .popover>.arrow:after {
+    border-right-color: #01a9829f;
+    right: -1px;
+}
+
+:host >>> .popover>.arrow:before {
+    right: -1px;
+}
+
+:host >>> .popover-body {
+    color:#fff !important;
+    background: #01a9829f !important;
+}
